@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:task1_invites/calculator.dart';
+
 import 'guest.dart';
 import 'guest_responses.dart';
 
@@ -26,47 +28,13 @@ void main() {
 
 //task1
 void fromString(String string){
-  List<String> list = string.split("\n");
-  int numberOfGuests = int.parse(list.first);
-  list.removeAt(0);
-  List<Guest> guests = list.map((e){
-    return Guest.fromFormattedString(e);
-  }).toList();
-
-  int totalPeople = 2;
-  var parsedResponse = GuestResponses(invites: guests, numberOfGuests: numberOfGuests);
-
-  for(var element in parsedResponse.invites){
-    totalPeople++;
-    if(element.withFriend){
-      totalPeople++;
-    }
-  }
-
-  if(totalPeople ==13){
-    totalPeople++;
-  }
-
-  print('String total sum is: ${totalPeople*100}');
+  var parsedResponse = GuestResponses.fromFormattedString(string);
+  print('String total sum is: ${Calculator.calculate(parsedResponse)}');
 }
 
 //task3
 void fromJson(String jsonInput){
-  int totalPeople = 2;
-
   var decodedJson = jsonDecode(jsonInput);
   var parsedResponse = GuestResponses.fromJson(decodedJson);
-
-  for(var element in parsedResponse.invites){
-    totalPeople++;
-    if(element.withFriend){
-      totalPeople++;
-    }
-  }
-
-  if(totalPeople ==13){
-    totalPeople++;
-  }
-
-  print('JSON total sum is: ${totalPeople*100}');
+  print('JSON total sum is: ${Calculator.calculate(parsedResponse)}');
 }

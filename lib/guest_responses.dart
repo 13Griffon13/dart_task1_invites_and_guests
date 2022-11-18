@@ -9,6 +9,16 @@ class GuestResponses {
             ? numberOfGuests
             : throw Exception("Invalid number");
 
+  factory GuestResponses.fromFormattedString(String string){
+    List<String> list = string.split("\n");
+    int numberOfGuests = int.parse(list.first);
+    list.removeAt(0);
+    List<Guest> guests = list.map((e){
+      return Guest.fromFormattedString(e);
+    }).toList();
+    return GuestResponses(invites: guests, numberOfGuests: numberOfGuests);
+  }
+
   factory GuestResponses.fromJson(Map<String, dynamic> map) {
     var numberOfInvites = map['numberOfGuests'] as int;
     var jsonInvites = map["guests"] as List<dynamic>;
