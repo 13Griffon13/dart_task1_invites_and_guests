@@ -1,0 +1,9 @@
+{
+  "numberOfGuests": 4,
+  "guests": [
+    "lib/mockup_data/guest1.json",
+    "lib/mockup_data/guest2.json",
+    "lib/mockup_data/guest3.json",
+    "lib/mockup_data/guest4.json"
+  ]
+}
