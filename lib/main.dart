@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:task1_invites/calculator.dart';
+import 'package:task1_invites/services/calculator.dart';
+import 'package:task1_invites/services/file_reader.dart';
 
-import 'guest.dart';
-import 'guest_responses.dart';
+import 'models/guest.dart';
+import 'models/guests_list.dart';
 
 void main() {
   String stringInput = '6\n'
@@ -23,39 +24,33 @@ void main() {
       ']}';
   print("JSON input is:\n$jsonInput");
 
+  fromFile("lib/mockup_data/response.json"); //will finish last cause of returning Future<void>
   fromString(stringInput);
   fromJson(jsonInput);
-  fromFile("lib/mockup_data/response.json");
+
 }
 
 //task1
 void fromString(String string) {
-  var parsedResponse = GuestResponses.fromFormattedString(string);
+  var parsedResponse = GuestsList.fromFormattedString(string);
   print('String total sum is: ${Calculator.calculate(parsedResponse)}');
 }
 
 //task3
 void fromJson(String jsonInput) {
   var decodedJson = jsonDecode(jsonInput);
-  var parsedResponse = GuestResponses.fromJson(decodedJson);
+  var parsedResponse = GuestsList.fromJson(decodedJson);
   print('JSON total sum is: ${Calculator.calculate(parsedResponse)}');
 }
 
 //task2
 void fromFile(String path) async {
-  final responseFileRef = File(path);
-  final responseContent = await responseFileRef.readAsString();
-  final decodedResponse = jsonDecode(responseContent);
-  final listOfGuestSource = decodedResponse["guests"] as List<dynamic>;
-  var inviteRequests = <Future<String>>[];
-  for (var element in listOfGuestSource) {
-    inviteRequests.add(File(element as String).readAsString());
-  }
-  final guests = await Future.wait(inviteRequests).then((value) {
-    return value.map((e) => Guest.fromJson(jsonDecode(e))).toList();
-  });
-  final parsedResponse = GuestResponses(
+  final response = await FileReader.getResponse(path);
+  final guests = await FileReader.getGuests(response.invitesSrc);
+  print('AsyncFile total sum is: ${Calculator.calculate(
+    GuestsList(
       invites: guests,
-      numberOfGuests: decodedResponse["numberOfGuests"] as int);
-  print('Async total sum is: ${Calculator.calculate(parsedResponse)}');
+      numberOfGuests: response.numberOfGuests,
+    ),
+  )}');
 }

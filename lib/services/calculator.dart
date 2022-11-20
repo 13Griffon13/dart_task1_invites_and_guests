@@ -1,12 +1,12 @@
 
 
-import 'package:task1_invites/guest_responses.dart';
+import 'package:task1_invites/models/guests_list.dart';
 
 class Calculator{
 
 
 
-  static int calculate(GuestResponses responses){
+  static int calculate(GuestsList responses){
     int totalPeople = 2;
     for(var element in responses.invites){
       totalPeople++;
