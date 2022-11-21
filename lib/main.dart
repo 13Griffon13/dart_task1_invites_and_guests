@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:task1_invites/services/calculator.dart';
 import 'package:task1_invites/services/file_reader.dart';
 
-import 'models/guest.dart';
-import 'models/guests_list.dart';
+import 'models/guest_model/guest.dart';
+import 'models/guest_list_model/guests_list.dart';
 
 void main() {
   String stringInput = '6\n'
@@ -48,7 +48,7 @@ void fromFile(String path) async {
   final response = await FileReader.getResponse(path);
   final guests = await FileReader.getGuests(response.invitesSrc);
   print('AsyncFile total sum is: ${Calculator.calculate(
-    GuestsList(
+    GuestsList.create(
       guests: guests,
       numberOfGuests: response.numberOfGuests,
     ),
@@ -61,7 +61,7 @@ void randomGenerated(String dir) async{
   final response = await FileReader.getResponse('$dir/response.json');
   final guests = await FileReader.getGuests(response.invitesSrc);
   print('RandomlyGenerated total sum is: ${Calculator.calculate(
-    GuestsList(
+    GuestsList.create(
       guests: guests,
       numberOfGuests: response.numberOfGuests,
     ),

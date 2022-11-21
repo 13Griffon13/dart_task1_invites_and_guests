@@ -1,6 +1,6 @@
 
 
-import 'package:task1_invites/models/guests_list.dart';
+import 'package:task1_invites/models/guest_list_model/guests_list.dart';
 
 class Calculator{
 

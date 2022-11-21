@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:task1_invites/models/guest.dart';
-import 'package:task1_invites/models/guests_list.dart';
-import 'package:task1_invites/models/guests_response.dart';
+import 'package:task1_invites/models/guest_model/guest.dart';
+import 'package:task1_invites/models/guest_list_model/guests_list.dart';
+import 'package:task1_invites/models/guest_response_model/guests_response.dart';
 
 class FileReader {
   static Future<GuestsResponse> getResponse(String url) async {
