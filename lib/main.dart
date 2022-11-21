@@ -27,7 +27,7 @@ void main() {
   fromFile("lib/mockup_data/response.json"); //will finish last cause of returning Future<void>
   fromString(stringInput);
   fromJson(jsonInput);
-
+  randomGenerated('lib/generated_data');
 }
 
 //task1
@@ -49,7 +49,20 @@ void fromFile(String path) async {
   final guests = await FileReader.getGuests(response.invitesSrc);
   print('AsyncFile total sum is: ${Calculator.calculate(
     GuestsList(
-      invites: guests,
+      guests: guests,
+      numberOfGuests: response.numberOfGuests,
+    ),
+  )}');
+}
+
+//additional task
+void randomGenerated(String dir) async{
+  await FileReader.writeGuestList(GuestsList.random(), dir);
+  final response = await FileReader.getResponse('$dir/response.json');
+  final guests = await FileReader.getGuests(response.invitesSrc);
+  print('RandomlyGenerated total sum is: ${Calculator.calculate(
+    GuestsList(
+      guests: guests,
       numberOfGuests: response.numberOfGuests,
     ),
   )}');

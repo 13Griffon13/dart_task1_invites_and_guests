@@ -12,4 +12,11 @@ class GuestsResponse {
     return GuestsResponse(
         numberOfGuests, list.map((e) => e as String).toList());
   }
+
+  Map toJson() {
+    return {
+      'numberOfGuests': numberOfGuests,
+      'guests': invitesSrc,
+    };
+  }
 }

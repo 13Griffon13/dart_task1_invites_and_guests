@@ -8,7 +8,7 @@ class Calculator{
 
   static int calculate(GuestsList responses){
     int totalPeople = 2;
-    for(var element in responses.invites){
+    for(var element in responses.guests){
       totalPeople++;
       if(element.withFriend){
         totalPeople++;
