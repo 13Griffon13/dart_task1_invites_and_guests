@@ -6,7 +6,9 @@ class Guest {
   final bool withFriend;
 
   Guest(String name, bool? withFriend)
-      : this.name = name,
+      : this.name = RegExp('^([a-zA-Z]){1,20}\$').hasMatch(name)
+            ? name
+            : throw Exception("Invalid name"),
         this.withFriend = withFriend ?? false;
 
   factory Guest.fromFormattedString(String string) {
@@ -30,7 +32,7 @@ class Guest {
   }
 
   factory Guest.random() {
-    final name = _randomName(Random().nextInt(20));
+    final name = _randomName(1+Random().nextInt(19));
     final withFriend = Random().nextBool();
     return Guest(name, withFriend);
   }
